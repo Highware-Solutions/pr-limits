@@ -28998,7 +28998,7 @@ function run() {
                     maxFilesInput = core.getInput('max_files');
                     maxModificationsInput = core.getInput('max_modifications');
                     customComment = core.getInput('comment');
-                    token = core.getInput('github_token');
+                    token = core.getInput('github_token', { required: true });
                     octokit = github.getOctokit(token);
                     context = github.context;
                     prNumber = (_a = context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number;
