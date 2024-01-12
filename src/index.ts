@@ -62,8 +62,8 @@ async function run(): Promise<void> {
         commentBody = `This PR contains ${fileChanges} file changes and ${modifications} modifications, which exceeds the specified limits.`;
       } else {
         commentBody = commentBody
-          .replace('{{max_files}}', maxFilesInput || 'N/A')
-          .replace('{{max_modifications}}', maxModificationsInput || 'N/A');
+          .replace('{{files}}', `${fileChanges}`)
+          .replace('{{modifications}}', `${modifications}`);
       }
 
       await octokit.rest.issues.createComment({

@@ -41,6 +41,6 @@ jobs:
         with:
           max_files: 10
           max_modifications: 500
-          comment: 'This PR changes {{max_files}} files and modifies {{max_modifications}} lines, which exceeds our project guidelines.'
+          comment: 'This PR changes {{files}} files and modifies {{modifications}} lines, which exceeds our project guidelines.'
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
