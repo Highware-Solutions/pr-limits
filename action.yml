@@ -1,0 +1,15 @@
+name: 'PR Files and Modifications Check'
+description: 'Check the number of files and line modifications in a PR'
+inputs:
+  max_files:
+    description: 'Maximum number of files allowed in a PR (optional, no limit if not set)'
+    required: false
+  max_modifications:
+    description: 'Maximum number of line modifications allowed in a PR (optional, no limit if not set)'
+    required: false
+  comment:
+    description: 'Custom comment to post on the PR. Use {{max_files}} and {{max_modifications}} to interpolate values.'
+    required: false
+runs:
+  using: 'node12'
+  main: 'index.js'
