@@ -13,6 +13,9 @@ inputs:
   comment:
     description: 'Custom comment to post on the PR. Use {{max_files}} and {{max_modifications}} to interpolate values.'
     required: false
+  github_token:
+    description: 'GitHub token'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

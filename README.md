@@ -18,6 +18,10 @@ If this is not set, the action will not check the number of modified lines in th
 
 This is the comment that will be posted to the PR if it exceeds the limits.
 
+### `github_token`
+
+This is the GitHub token that will be used to post the comment to the PR.
+
 ## Usage
 
 ```yaml
@@ -38,6 +42,5 @@ jobs:
           max_files: 10
           max_modifications: 500
           comment: 'This PR changes {{max_files}} files and modifies {{max_modifications}} lines, which exceeds our project guidelines.'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
