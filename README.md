@@ -33,7 +33,7 @@ jobs:
           fetch-depth: 0
 
       - name: PR Files and Modifications Check
-        uses: Highware-Solutions/pr-limits@v1
+        uses: Highware-Solutions/pr-limits@v1.0.0
         with:
           max_files: 10
           max_modifications: 500
