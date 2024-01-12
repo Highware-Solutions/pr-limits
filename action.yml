@@ -1,5 +1,8 @@
 name: 'PR Files and Modifications Check'
 description: 'Check the number of files and line modifications in a PR'
+branding:
+  icon: 'alert-triangle'
+  color: 'red'
 inputs:
   max_files:
     description: 'Maximum number of files allowed in a PR (optional, no limit if not set)'
