@@ -29037,8 +29037,8 @@ function run() {
                     }
                     else {
                         commentBody = commentBody
-                            .replace('{{max_files}}', maxFilesInput || 'N/A')
-                            .replace('{{max_modifications}}', maxModificationsInput || 'N/A');
+                            .replace('{{files}}', "".concat(fileChanges))
+                            .replace('{{modifications}}', "".concat(modifications));
                     }
                     return [4 /*yield*/, octokit.rest.issues.createComment(__assign(__assign({}, repo), { issue_number: prNumber, body: commentBody + " ".concat(failureMessage) }))];
                 case 3:
