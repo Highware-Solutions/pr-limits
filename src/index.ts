@@ -1,11 +1,11 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
-const { exec } = require('child_process');
-const util = require('util');
+import * as core from '@actions/core';
+import * as github from '@actions/github';
+import { exec } from 'child_process';
+import { promisify } from 'util';
 
-const execAsync = util.promisify(exec);
+const execAsync = promisify(exec);
 
-async function run() {
+async function run(): Promise<void> {
   try {
     const maxFilesInput = core.getInput('max_files');
     const maxModificationsInput = core.getInput('max_modifications');
@@ -14,19 +14,19 @@ async function run() {
     const octokit = github.getOctokit(token);
 
     const { context } = github;
-    const prNumber = context.payload.pull_request.number;
+    const prNumber = context.payload.pull_request?.number;
     const repo = context.repo;
 
     // Command to filter out lock files
     const excludeLockFilesCmd = "grep -Ev '(package-lock.json|yarn.lock|pnpm-lock.yaml)'";
 
     const { stdout: fileChangesStdout } = await execAsync(
-      `git diff --name-only origin/${context.payload.pull_request.base.ref} origin/${context.payload.pull_request.head.ref} | ${excludeLockFilesCmd} | wc -l`,
+      `git diff --name-only origin/${context.payload.pull_request?.base.ref} origin/${context.payload.pull_request?.head.ref} | ${excludeLockFilesCmd} | wc -l`,
     );
     const fileChanges = parseInt(fileChangesStdout.trim());
 
     const { stdout: modificationsStdout } = await execAsync(
-      `git diff --shortstat origin/${context.payload.pull_request.base.ref} origin/${context.payload.pull_request.head.ref} -- . ':(exclude)package-lock.json' ':(exclude)yarn.lock' ':(exclude)pnpm-lock.yaml' | awk '{print $4 + $6}'`,
+      `git diff --shortstat origin/${context.payload.pull_request?.base.ref} origin/${context.payload.pull_request?.head.ref} -- . ':(exclude)package-lock.json' ':(exclude)yarn.lock' ':(exclude)pnpm-lock.yaml' | awk '{print $4 + $6}'`,
     );
 
     const modifications = parseInt(modificationsStdout.trim() || '0');
@@ -66,16 +66,20 @@ async function run() {
           .replace('{{max_modifications}}', maxModificationsInput || 'N/A');
       }
 
-      await octokit.issues.createComment({
+      await octokit.rest.issues.createComment({
         ...repo,
-        issue_number: prNumber,
+        issue_number: prNumber as number,
         body: commentBody + ` ${failureMessage}`,
       });
 
       core.setFailed(`PR exceeds the allowed limits. ${failureMessage}`);
     }
   } catch (error) {
-    core.setFailed(error.message);
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    } else {
+      core.setFailed('Unknown error occurred.');
+    }
   }
 }
 
