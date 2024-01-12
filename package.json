@@ -2,7 +2,7 @@
   "name": "pr-limits",
   "version": "1.0.0",
   "description": "Checks the number of files and line modifications in a PR",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "ncc build index.js"
   },
