@@ -10,7 +10,7 @@ async function run(): Promise<void> {
     const maxFilesInput = core.getInput('max_files');
     const maxModificationsInput = core.getInput('max_modifications');
     const customComment = core.getInput('comment');
-    const token = core.getInput('github_token');
+    const token = core.getInput('github_token', { required: true });
     const octokit = github.getOctokit(token);
 
     const { context } = github;
