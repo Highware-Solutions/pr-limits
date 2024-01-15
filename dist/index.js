@@ -29040,7 +29040,7 @@ function run() {
                             .replace('{{files}}', "".concat(fileChanges))
                             .replace('{{modifications}}', "".concat(modifications));
                     }
-                    return [4 /*yield*/, octokit.rest.issues.createComment(__assign(__assign({}, repo), { issue_number: prNumber, body: commentBody + " ".concat(failureMessage) }))];
+                    return [4 /*yield*/, octokit.rest.issues.createComment(__assign(__assign({}, repo), { issue_number: prNumber, body: commentBody }))];
                 case 3:
                     _f.sent();
                     core.setFailed("PR exceeds the allowed limits. ".concat(failureMessage));

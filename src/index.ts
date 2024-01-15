@@ -69,7 +69,7 @@ async function run(): Promise<void> {
       await octokit.rest.issues.createComment({
         ...repo,
         issue_number: prNumber as number,
-        body: commentBody + ` ${failureMessage}`,
+        body: commentBody,
       });
 
       core.setFailed(`PR exceeds the allowed limits. ${failureMessage}`);
